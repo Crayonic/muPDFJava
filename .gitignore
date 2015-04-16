@@ -1,0 +1,10 @@
+*.class
+*.iml
+.gradle
+/local.properties
+.DS_Store
+/build
+/app/build
+local.properties
+/extlibs
+/.idea
