@@ -1,5 +1,10 @@
 apply plugin: 'com.android.library'
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
@@ -32,8 +37,9 @@ android {
 }
 
 dependencies {
-    compile project(':extlibs:android-pdf-library')
-    //compile fileTree(dir: 'libs', include: ['*.jar'])
+	compile(name:'muPDFC-release', ext:'aar')
+    //compile project(':extlibs:muPDFC')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.0.0'
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.2.1'
