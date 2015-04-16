@@ -1,10 +1,15 @@
-apply plugin: 'com.android.library'
-
-repositories {
-    flatDir {
-        dirs 'libs'
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.1.0'
     }
 }
+ 
+
+apply plugin: 'com.android.library'
+
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
@@ -24,10 +29,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets.main {
-        jni.srcDirs = []
-        jniLibs.srcDir 'src/main/libs'
-    }
+	splits {
+		abi {
+		  enable true
+		  reset()
+		  include 'x86', 'armeabi-v7a'
+		  universalApk true
+		}
+	}
+	
+  //  sourceSets.main {
+   //     jni.srcDirs = []
+   //     jniLibs.srcDir 'libs'
+   // }
     sourceSets {
         instrumentTest.setRoot('src/androidTest/')
     }
@@ -36,10 +50,14 @@ android {
     }
 }
 
+repositories {
+	jcenter()
+   
+}
 dependencies {
-	compile(name:'muPDFC-release', ext:'aar')
+	//compile(name:'muPDFC-release', ext:'aar')
     //compile project(':extlibs:muPDFC')
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    //compile fileTree(dir: 'libs', include: ['*.aar'])
     compile 'com.android.support:appcompat-v7:22.0.0'
     testCompile 'junit:junit:4.12'
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.2.1'
